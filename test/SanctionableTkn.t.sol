@@ -58,6 +58,7 @@ contract SanctionableTknTest is Test {
         assertEq(token.balanceOf(alice), transferAmount);
     }
 
+    // Test if the sanction list works
     function test_ApproveIncreaseDecrease() public {
         uint256 initialAllowance = 100 ether;
         uint256 increaseAmount = 50 ether;
@@ -86,5 +87,21 @@ contract SanctionableTknTest is Test {
             token.allowance(bob, alice),
             initialAllowance + increaseAmount - decreaseAmount
         );
+    }
+
+    // Alice is in the sanction list
+    function test_SanctionListApproval() public {
+        token.addSanction(alice);
+        uint256 transferAmount = 500;
+
+        vm.startPrank(bob);
+        // Approval cannot work
+        vm.expectRevert("Sender / Recipient is in the sanction list");
+        token.approve(alice, transferAmount);
+        vm.stopPrank();
+
+        // Alice tries to transfer tokens to Bob
+        // vm.prank(bob);
+        // token.transfer(alice, transferAmount);
     }
 }

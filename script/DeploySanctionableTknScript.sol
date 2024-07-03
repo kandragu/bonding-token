@@ -10,10 +10,10 @@ contract DeploySanctionableTknScript is Script {
     function setUp() public {}
 
     function run() public returns (SanctionableTkn) {
-        console.log("SanctionableTknScript.run");
+        console.log("SanctionableTknScript.run ==>", msg.sender);
         vm.startBroadcast();
         SanctionableTkn token = new SanctionableTkn(INITIAL_SUPPLY);
-
+        console.log("Deployer ==>:", msg.sender);
         vm.stopBroadcast();
 
         return token;

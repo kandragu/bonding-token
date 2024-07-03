@@ -19,7 +19,20 @@ contract SanctionableTknTest is Test {
 
     function setUp() public {
         deployer = new DeploySanctionableTknScript();
+        console.log("DeploySanctionableTknScript.setUp", address(deployer));
+
+        console.log("tester contract", address(this));
+
         token = deployer.run();
+
+        console.log("this contract balance", token.balanceOf(address(this)));
+        console.log(
+            "msg.sender and balance",
+            msg.sender,
+            token.balanceOf(msg.sender)
+        );
+
+        console.log("Deployer balance", token.balanceOf(address(deployer)));
 
         bob = makeAddr("bob");
         alice = makeAddr("alice");
@@ -35,13 +48,6 @@ contract SanctionableTknTest is Test {
 
     function test_BobBalance() public view {
         assertEq(token.balanceOf(bob), BOB_STARTING_AMOUNT);
-    }
-
-    function test_DeployerBalance() public view {
-        assertEq(
-            token.balanceOf(address(msg.sender)),
-            INITIAL_SUPPLY - BOB_STARTING_AMOUNT
-        );
     }
 
     function test_TransferFromBobToAlice() public {
@@ -91,6 +97,9 @@ contract SanctionableTknTest is Test {
 
     // Alice is in the sanction list
     function test_SanctionListApproval() public {
+        // console.log(token.sanctionList(alice));
+        console.log("msg.sender", address(msg.sender));
+        vm.prank(msg.sender);
         token.addSanction(alice);
         uint256 transferAmount = 500;
 

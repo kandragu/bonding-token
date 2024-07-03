@@ -4,10 +4,10 @@ pragma solidity ^0.8.13;
 import {IERC20, ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {IERC165, ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
-import {IERC1363} from "./IERC1363.sol";
-import {IERC1363Errors} from "./IERC1363Errors.sol";
-import {IERC1363Receiver} from "./IERC1363Receiver.sol";
-import {IERC1363Spender} from "./IERC1363Spender.sol";
+import {IERC1363} from "../interface/IERC1363.sol";
+import {IERC1363Errors} from "../interface/IERC1363Errors.sol";
+import {IERC1363Receiver} from "../interface/IERC1363Receiver.sol";
+import {IERC1363Spender} from "../interface/IERC1363Spender.sol";
 
 /**vgvb    bb
  * @title ERC1363

@@ -5,10 +5,6 @@ import {Test, console} from "forge-std/Test.sol";
 import {DeploySanctionableTknScript} from "../script/DeploySanctionableTknScript.sol";
 import {SanctionableTkn} from "../src/sanction/SanctionableTkn.sol";
 
-interface MintableToken {
-    function mint(address, uint256) external;
-}
-
 contract SanctionableTknTest is Test {
     SanctionableTkn token;
     DeploySanctionableTknScript deployer;

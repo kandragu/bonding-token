@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {ERC1363, ERC20, IERC20} from "./ERC1363.sol";
+import {ERC1363, ERC20, IERC20} from "../base/ERC1363.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import {console} from "forge-std/Test.sol";

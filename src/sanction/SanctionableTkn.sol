@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import {ERC1363, ERC20, IERC20} from "./ERC1363.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import {console} from "forge-std/Test.sol";
 
 contract SanctionableTkn is ERC1363, AccessControl {
     mapping(address => bool) public sanctionList;
@@ -11,13 +12,14 @@ contract SanctionableTkn is ERC1363, AccessControl {
 
     constructor(uint256 INITIAL_SUPPLY) ERC20("TestToken", "TST") {
         // Grant the minter role to a specified account
+        console.log("[SanctionableTkn]  msg.sender ==>:", msg.sender);
         _grantRole(ADMIN_ROLE, msg.sender);
         _mint(msg.sender, INITIAL_SUPPLY);
     }
 
-    // function addAdmin(address _address) public {
-    //     grantRole(ADMIN_ROLE, _address);
-    // }
+    function addAdmin(address _address) public onlyRole(ADMIN_ROLE) {
+        _grantRole(ADMIN_ROLE, _address);
+    }
 
     function addSanction(address _address) public onlyRole(ADMIN_ROLE) {
         sanctionList[_address] = true;

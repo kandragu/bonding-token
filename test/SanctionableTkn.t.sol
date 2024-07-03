@@ -86,6 +86,7 @@ contract SanctionableTknTest is Test {
     // Alice is in the sanction list
     function test_SanctionListApproval() public {
         // only admin can add to the sanction list
+        console.log("msg sender", msg.sender);
         vm.prank(msg.sender);
         token.addSanction(alice);
         uint256 transferAmount = 500;
@@ -95,5 +96,17 @@ contract SanctionableTknTest is Test {
         vm.expectRevert("Sender / Recipient is in the sanction list");
         token.approve(alice, transferAmount);
         vm.stopPrank();
+    }
+
+    //Add Bob as the admin and add Alice to the sanction list
+    function test_AddAdminAndSanction() public {
+        vm.prank(msg.sender);
+        token.addAdmin(bob);
+        //bob is the admin and he will add alice to the sanction list
+        vm.prank(bob);
+        token.addSanction(alice);
+
+        // Alice is in the sanction list
+        assert(token.sanctionList(alice));
     }
 }

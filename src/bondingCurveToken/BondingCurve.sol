@@ -31,14 +31,6 @@ contract BondingCurve is ERC20, BancorFormula, Ownable {
         reserveRatio = 333333; // 1/3 corresponds to y= multiple * x^2
     }
 
-    // function initializer() public payable {
-    //     reserveRatio = 333333;
-    //     uint256 tokensToMint = msg.value;
-    //     _mint(msg.sender, tokensToMint);
-    //     poolBalance += msg.value;
-    //     emit LogMint(tokensToMint, msg.value);
-    // }
-
     /*
      * @dev reserve ratio, represented in ppm, 1-1000000
      * 1/3 corresponds to y= multiple * x^2

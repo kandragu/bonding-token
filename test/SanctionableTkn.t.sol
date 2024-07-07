@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {DeploySanctionableTknScript} from "../script/DeploySanctionableTknScript.sol";
+import {DeploySanctionableTknScript} from "../script/DeploySanctionableTknScript.s.sol";
 import {SanctionableTkn} from "../src/sanction/SanctionableTkn.sol";
 
 contract SanctionableTknTest is Test {

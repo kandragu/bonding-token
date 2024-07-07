@@ -33,10 +33,18 @@ contract BondingCurveTest is Test {
     }
 
     function test_buy() public {
+        vm.prank(msg.sender);
+        bondingCurveToken.setGasPrice(77825 gwei);
+        uint256 gasPrice = 10 gwei;
+        vm.txGasPrice(gasPrice);
+        uint256 gasStart = gasleft();
         bool buyResponse = bondingCurveToken.buy{value: 1 ether}();
+        uint256 gasEnd = gasleft();
         assertEq(buyResponse, true);
         assertEq(bondingCurveToken.balanceOf(address(this)), 999981 wei);
         assertEq(bondingCurveToken.poolBalance(), 1000000000000000001 wei);
+        // console.log("gasUsed", (gasStart - gasEnd) * tx.gasprice);
+        // console.log("gas used", (gasStart - gasEnd));
     }
 
     function test_calculatePurchaseReturn() public view {

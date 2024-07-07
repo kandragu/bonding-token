@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 // import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import {IERC20, ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "./BancorFormula.sol";
 import {ERC1363, ERC20, IERC20} from "../base/ERC1363.sol";
 
@@ -14,7 +15,7 @@ import {ERC1363, ERC20, IERC20} from "../base/ERC1363.sol";
  * https://github.com/bancorprotocol/contracts
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
-contract BondingCurve is ERC20, BancorFormula, Ownable {
+contract BondingCurve is ERC20, BancorFormula, Ownable2Step {
     /**
      * @dev Available balance of reserve token in contract
      */
@@ -112,6 +113,7 @@ contract BondingCurve is ERC20, BancorFormula, Ownable {
 
     // verifies that the gas price is lower than the universal limit
     modifier validGasPrice() {
+        console.log("tx.gasprice", tx.gasprice, gasPrice);
         assert(tx.gasprice <= gasPrice);
         _;
     }

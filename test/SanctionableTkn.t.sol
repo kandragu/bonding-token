@@ -105,4 +105,23 @@ contract SanctionableTknTest is Test {
         // Alice is in the sanction list
         assert(token.sanctionList(alice));
     }
+
+    // Add alice to sanction list and remove him from the list
+    function test_AddRemoveSanction() public {
+        vm.prank(msg.sender);
+        token.addAdmin(bob);
+        //bob is the admin and he will add alice to the sanction list
+        vm.prank(bob);
+        token.addSanction(alice);
+
+        // Alice is in the sanction list
+        assert(token.sanctionList(alice));
+
+        // Remove Alice from the sanction list
+        vm.prank(bob);
+        token.removeSanction(alice);
+
+        // Alice is not in the sanction list
+        assert(!token.sanctionList(alice));
+    }
 }

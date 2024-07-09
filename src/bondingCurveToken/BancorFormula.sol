@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
+
 import "./Power.sol";
 import "./lib/safeMath.sol";
 import {console} from "forge-std/Test.sol";
@@ -40,20 +41,10 @@ contract BancorFormula is Power {
         uint32 _connectorWeight,
         uint256 _depositAmount
     ) public view returns (uint256) {
-        console.log(
-            "calculatePurchaseReturn inputs",
-            _supply,
-            _connectorBalance,
-            _connectorWeight
-        );
+        console.log("calculatePurchaseReturn inputs", _supply, _connectorBalance, _connectorWeight);
         console.log("deposit amount", _depositAmount);
         // validate input
-        require(
-            _supply > 0 &&
-                _connectorBalance > 0 &&
-                _connectorWeight > 0 &&
-                _connectorWeight <= MAX_WEIGHT
-        );
+        require(_supply > 0 && _connectorBalance > 0 && _connectorWeight > 0 && _connectorWeight <= MAX_WEIGHT);
 
         // special case for 0 deposit amount
         if (_depositAmount == 0) {
@@ -68,12 +59,7 @@ contract BancorFormula is Power {
         uint256 result;
         uint8 precision;
         uint256 baseN = _depositAmount.add(_connectorBalance);
-        (result, precision) = power(
-            baseN,
-            _connectorBalance,
-            _connectorWeight,
-            MAX_WEIGHT
-        );
+        (result, precision) = power(baseN, _connectorBalance, _connectorWeight, MAX_WEIGHT);
         uint256 temp = _supply.mul(result) >> precision;
         return temp - _supply;
     }
@@ -100,11 +86,8 @@ contract BancorFormula is Power {
     ) public view returns (uint256) {
         // validate input
         require(
-            _supply > 0 &&
-                _connectorBalance > 0 &&
-                _connectorWeight > 0 &&
-                _connectorWeight <= MAX_WEIGHT &&
-                _sellAmount <= _supply
+            _supply > 0 && _connectorBalance > 0 && _connectorWeight > 0 && _connectorWeight <= MAX_WEIGHT
+                && _sellAmount <= _supply
         );
 
         // special case for 0 sell amount
@@ -125,12 +108,7 @@ contract BancorFormula is Power {
         uint256 result;
         uint8 precision;
         uint256 baseD = _supply - _sellAmount;
-        (result, precision) = power(
-            _supply,
-            baseD,
-            MAX_WEIGHT,
-            _connectorWeight
-        );
+        (result, precision) = power(_supply, baseD, MAX_WEIGHT, _connectorWeight);
         uint256 oldBalance = _connectorBalance.mul(result);
         uint256 newBalance = _connectorBalance << precision;
         return oldBalance.sub(newBalance).div(result);

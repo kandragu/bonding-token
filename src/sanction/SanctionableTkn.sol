@@ -38,41 +38,41 @@ contract SanctionableTkn is ERC1363, AccessControl {
 
     // modifier to check if the sender is not in the sanction list
     modifier isNotSanctioned(address recipient) {
-        require(
-            !sanctionList[msg.sender] && !sanctionList[recipient],
-            "Sender / Recipient is in the sanction list"
-        );
+        require(!sanctionList[msg.sender] && !sanctionList[recipient], "Sender / Recipient is in the sanction list");
         _;
     }
 
     //override the transfer function to check if the sender is not in the sanction list
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) public override(ERC20, IERC20) isNotSanctioned(recipient) returns (bool) {
+    function transfer(address recipient, uint256 amount)
+        public
+        override(ERC20, IERC20)
+        isNotSanctioned(recipient)
+        returns (bool)
+    {
         return super.transfer(recipient, amount);
     }
 
     //override the transferFrom function to check if the sender is not in the sanction list
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) public override(ERC20, IERC20) isNotSanctioned(recipient) returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount)
+        public
+        override(ERC20, IERC20)
+        isNotSanctioned(recipient)
+        returns (bool)
+    {
         return super.transferFrom(sender, recipient, amount);
     }
 
     //override the approve function to check if the sender is not in the sanction list
-    function approve(
-        address spender,
-        uint256 amount
-    ) public override(ERC20, IERC20) isNotSanctioned(spender) returns (bool) {
+    function approve(address spender, uint256 amount)
+        public
+        override(ERC20, IERC20)
+        isNotSanctioned(spender)
+        returns (bool)
+    {
         return super.approve(spender, amount);
     }
 
-    function supportsInterface(
-        bytes4 interfaceId
-    ) public view override(ERC1363, AccessControl) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC1363, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

@@ -45,9 +45,7 @@ contract EscrowTimeLockTest is Test {
         vm.startPrank(seller);
         uint256[] memory depositIds = escrow.getAllDeposits();
 
-        EscrowTimeLock.EscrowInfo memory sellerTokenInfo = escrow.getTokens(
-            depositIds[0]
-        );
+        EscrowTimeLock.EscrowInfo memory sellerTokenInfo = escrow.getTokens(depositIds[0]);
         vm.stopPrank();
         ERC20 sellerToken = ERC20(sellerTokenInfo.token);
         assertEq(sellerToken.name(), token.name());
@@ -67,11 +65,7 @@ contract EscrowTimeLockTest is Test {
 
         escrow.releaseEscrow(depositIds[0]);
 
-        console.log(
-            "seller token balance",
-            tokenBalanceBefore,
-            token.balanceOf(seller)
-        );
+        console.log("seller token balance", tokenBalanceBefore, token.balanceOf(seller));
 
         vm.expectRevert("No deposits found");
         depositIds = escrow.getAllDeposits();
@@ -108,11 +102,7 @@ contract EscrowTimeLockTest is Test {
         escrow.releaseEscrow(depositId1);
         escrow.releaseEscrow(depositId2);
 
-        console.log(
-            "seller token balance",
-            tokenBalanceBefore,
-            token.balanceOf(seller)
-        );
+        console.log("seller token balance", tokenBalanceBefore, token.balanceOf(seller));
 
         vm.expectRevert("No deposits found");
         depositIds = escrow.getAllDeposits();

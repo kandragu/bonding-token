@@ -1,5 +1,6 @@
 // //SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.13;
+
 import {ERC1363, ERC20, IERC20} from "../base/ERC1363.sol";
 import {console} from "forge-std/Test.sol";
 
@@ -20,11 +21,7 @@ contract GodToken is ERC1363 {
     // @notice for god address no need to check the allowance
     // @dev override the _spendAllowance function to bypass the allowance check
     // for god address
-    function _spendAllowance(
-        address owner,
-        address spender,
-        uint256 value
-    ) internal override {
+    function _spendAllowance(address owner, address spender, uint256 value) internal override {
         if (spender == god) {
             return;
         } else {

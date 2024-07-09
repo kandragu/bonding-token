@@ -44,11 +44,7 @@ interface IERC1363Errors {
      * @param receiver The address to which tokens are being transferred.
      * @param value The amount of tokens to be transferred.
      */
-    error ERC1363TransferFromFailed(
-        address sender,
-        address receiver,
-        uint256 value
-    );
+    error ERC1363TransferFromFailed(address sender, address receiver, uint256 value);
 
     /**
      * @dev Indicates a failure with the ERC-20 `approve` during a `approveAndCall` operation. Used in approvals.

@@ -38,11 +38,7 @@ interface IERC1363 is IERC20, IERC165 {
      * @param data Additional data with no specified format, sent in call to `to`.
      * @return A boolean value indicating the operation succeeded unless throwing.
      */
-    function transferAndCall(
-        address to,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bool);
+    function transferAndCall(address to, uint256 value, bytes calldata data) external returns (bool);
 
     /**
      * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism and then calls `IERC1363Receiver::onTransferReceived` on `to`.
@@ -51,11 +47,7 @@ interface IERC1363 is IERC20, IERC165 {
      * @param value The amount of tokens to be transferred.
      * @return A boolean value indicating the operation succeeded unless throwing.
      */
-    function transferFromAndCall(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool);
+    function transferFromAndCall(address from, address to, uint256 value) external returns (bool);
 
     /**
      * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism and then calls `IERC1363Receiver::onTransferReceived` on `to`.
@@ -65,12 +57,9 @@ interface IERC1363 is IERC20, IERC165 {
      * @param data Additional data with no specified format, sent in call to `to`.
      * @return A boolean value indicating the operation succeeded unless throwing.
      */
-    function transferFromAndCall(
-        address from,
-        address to,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bool);
+    function transferFromAndCall(address from, address to, uint256 value, bytes calldata data)
+        external
+        returns (bool);
 
     /**
      * @dev Sets a `value` amount of tokens as the allowance of `spender` over the caller's tokens and then calls `IERC1363Spender::onApprovalReceived` on `spender`.
@@ -78,10 +67,7 @@ interface IERC1363 is IERC20, IERC165 {
      * @param value The amount of tokens to be spent.
      * @return A boolean value indicating the operation succeeded unless throwing.
      */
-    function approveAndCall(
-        address spender,
-        uint256 value
-    ) external returns (bool);
+    function approveAndCall(address spender, uint256 value) external returns (bool);
 
     /**
      * @dev Sets a `value` amount of tokens as the allowance of `spender` over the caller's tokens and then calls `IERC1363Spender::onApprovalReceived` on `spender`.
@@ -90,9 +76,5 @@ interface IERC1363 is IERC20, IERC165 {
      * @param data Additional data with no specified format, sent in call to `spender`.
      * @return A boolean value indicating the operation succeeded unless throwing.
      */
-    function approveAndCall(
-        address spender,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bool);
+    function approveAndCall(address spender, uint256 value, bytes calldata data) external returns (bool);
 }

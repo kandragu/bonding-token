@@ -19,9 +19,5 @@ interface IERC1363Spender {
      * @param data Additional data with no specified format.
      * @return `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))` if approval is allowed unless throwing.
      */
-    function onApprovalReceived(
-        address owner,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bytes4);
+    function onApprovalReceived(address owner, uint256 value, bytes calldata data) external returns (bytes4);
 }

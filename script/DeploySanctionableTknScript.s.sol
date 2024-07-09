@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
+
 import {Script, console} from "forge-std/Script.sol";
 import {SanctionableTkn} from "../src/sanction/SanctionableTkn.sol";
 

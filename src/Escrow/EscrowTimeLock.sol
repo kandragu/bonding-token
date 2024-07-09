@@ -13,6 +13,7 @@ import {console} from "forge-std/Test.sol";
 /// @dev DAYS is three days, should change according to the needs
 contract EscrowTimeLock {
     using SafeERC20 for IERC20;
+
     struct EscrowInfo {
         address buyer;
         address seller;
@@ -28,34 +29,17 @@ contract EscrowTimeLock {
 
     // Events for EscrowTimeLock
     event EscrowDeleted(address indexed seller, uint256 depositId);
-    event CreateEscrow(
-        address _buyer,
-        address _seller,
-        address _token,
-        uint256 _amount,
-        uint256 _unlockTime
-    );
+    event CreateEscrow(address _buyer, address _seller, address _token, uint256 _amount, uint256 _unlockTime);
 
     // @notice Create an escrow for the seller
     // @param _seller The address of the seller who will withdraw the tokens after the unlock time
     // @param _token The address of the token to be escrowed
     // @param _amount The amount of tokens to be escrowed
-    function createEscrow(
-        address _seller,
-        address _token,
-        uint256 _amount,
-        uint256 _unlockTime
-    ) public {
+    function createEscrow(address _seller, address _token, uint256 _amount, uint256 _unlockTime) public {
         IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
         uint256 timestamp = block.timestamp;
         sellerDeposits[_seller].push(timestamp);
-        sellerEscroInfo[_seller][timestamp] = EscrowInfo(
-            msg.sender,
-            _seller,
-            _token,
-            _amount,
-            _unlockTime
-        );
+        sellerEscroInfo[_seller][timestamp] = EscrowInfo(msg.sender, _seller, _token, _amount, _unlockTime);
         emit CreateEscrow(msg.sender, _seller, _token, _amount, _unlockTime);
     }
 
@@ -66,29 +50,17 @@ contract EscrowTimeLock {
         EscrowInfo memory escrowInfo = sellerEscroInfo[msg.sender][depositId];
         console.log("depositId", depositId);
         console.log("[releaseEscrow]", escrowInfo.seller, escrowInfo.amount);
-        require(
-            escrowInfo.unlockTime <= block.timestamp,
-            "Escrow is still locked"
-        );
-        IERC20(escrowInfo.token).safeTransfer(
-            escrowInfo.seller,
-            escrowInfo.amount
-        );
+        require(escrowInfo.unlockTime <= block.timestamp, "Escrow is still locked");
+        IERC20(escrowInfo.token).safeTransfer(escrowInfo.seller, escrowInfo.amount);
 
         deleteEscrowInfo(escrowInfo.seller, depositId);
     }
 
-    function getTokens(
-        uint256 depositId
-    ) external view returns (EscrowInfo memory info) {
+    function getTokens(uint256 depositId) external view returns (EscrowInfo memory info) {
         info = sellerEscroInfo[msg.sender][depositId];
     }
 
-    function getAllDeposits()
-        external
-        view
-        returns (uint256[] memory deposits)
-    {
+    function getAllDeposits() external view returns (uint256[] memory deposits) {
         require(sellerDeposits[msg.sender].length > 0, "No deposits found");
         deposits = sellerDeposits[msg.sender];
     }

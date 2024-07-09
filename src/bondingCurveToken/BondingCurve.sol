@@ -74,12 +74,7 @@ contract BondingCurve is ERC20, BancorFormula, Ownable2Step {
      */
     function buy() public payable validGasPrice returns (bool) {
         require(msg.value > 0);
-        uint256 tokensToMint = calculatePurchaseReturn(
-            totalSupply(),
-            poolBalance,
-            reserveRatio,
-            msg.value
-        );
+        uint256 tokensToMint = calculatePurchaseReturn(totalSupply(), poolBalance, reserveRatio, msg.value);
         console.log("[buy] tokensToMint", tokensToMint);
         // totalSupply = totalSupply.add(tokensToMint);
         _mint(msg.sender, tokensToMint);
@@ -97,12 +92,7 @@ contract BondingCurve is ERC20, BancorFormula, Ownable2Step {
      */
     function sell(uint256 sellAmount) public validGasPrice returns (bool) {
         require(sellAmount > 0 && balanceOf(msg.sender) >= sellAmount);
-        uint256 ethAmount = calculateSaleReturn(
-            totalSupply(),
-            poolBalance,
-            reserveRatio,
-            sellAmount
-        );
+        uint256 ethAmount = calculateSaleReturn(totalSupply(), poolBalance, reserveRatio, sellAmount);
         payable(msg.sender).transfer(ethAmount);
         poolBalance -= ethAmount;
         _burn(msg.sender, sellAmount);

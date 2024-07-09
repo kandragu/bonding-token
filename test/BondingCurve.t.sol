@@ -48,23 +48,13 @@ contract BondingCurveTest is Test {
     }
 
     function test_calculatePurchaseReturn() public view {
-        uint256 amtToken = bondingCurveToken.calculatePurchaseReturn(
-            1,
-            1,
-            1000000,
-            1
-        );
+        uint256 amtToken = bondingCurveToken.calculatePurchaseReturn(1, 1, 1000000, 1);
         assertEq(amtToken, 1);
         // console.log("tokenPurchase", amtToken);
     }
 
     function test_calculateSaleReturn() public view {
-        uint256 amtReturn = bondingCurveToken.calculateSaleReturn(
-            1,
-            1,
-            1000000,
-            1
-        );
+        uint256 amtReturn = bondingCurveToken.calculateSaleReturn(1, 1, 1000000, 1);
         console.log("tokenSale", amtReturn);
     }
 

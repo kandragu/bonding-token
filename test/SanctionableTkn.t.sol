@@ -62,21 +62,12 @@ contract SanctionableTknTest is Test {
         // Bob increases the allowance
         vm.prank(bob);
         token.approve(alice, initialAllowance + increaseAmount);
-        assertEq(
-            token.allowance(bob, alice),
-            initialAllowance + increaseAmount
-        );
+        assertEq(token.allowance(bob, alice), initialAllowance + increaseAmount);
 
         // Bob decreases the allowance
         vm.prank(bob);
-        token.approve(
-            alice,
-            initialAllowance + increaseAmount - decreaseAmount
-        );
-        assertEq(
-            token.allowance(bob, alice),
-            initialAllowance + increaseAmount - decreaseAmount
-        );
+        token.approve(alice, initialAllowance + increaseAmount - decreaseAmount);
+        assertEq(token.allowance(bob, alice), initialAllowance + increaseAmount - decreaseAmount);
     }
 
     // Alice is in the sanction list
